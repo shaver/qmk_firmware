@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,            _______,
         _______,  _______,  KC_KP_1,  KC_KP_2,  KC_KP_3,  KC_KP_4,  KC_KP_5,   KC_KP_6,  KC_KP_7,  KC_KP_8,  KC_KP_9,  KC_KP_0,  KC_PMNS,   KC_PPLS,  _______,            _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  KC_PAST,  _______,  _______,  _______,   _______,  _______,            _______,
-        _______,  KC_NUM,   _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,             KC_PENT,            _______,
+        _______,  KC_LNUM,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,             KC_PENT,            _______,
         _______,  _______,            _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  KC_PDOT,   KC_PSLS,  _______,  _______,
         _______,  _______,  _______,            _______,  _______,  _______,                       _______,            _______,                       _______,  _______,  _______),
 
@@ -91,16 +91,16 @@ enum combos {
     COMBO_LENGTH
 };
 
-const uint16_t PROGMEM ag_combo[] = { KC_A, KC_G, COMBO_END };
 const uint16_t PROGMEM af_combo[] = { KC_A, KC_F, COMBO_END };
+const uint16_t PROGMEM ad_combo[] = { KC_A, KC_D, COMBO_END };
 const uint16_t PROGMEM zv_combo[] = { KC_Z, KC_V, COMBO_END };
 const uint16_t PROGMEM zc_combo[] = { KC_Z, KC_C, COMBO_END };
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [AG_END] = COMBO(ag_combo, KC_END),
-    [AF_HOME] = COMBO(af_combo, KC_HOME),
+    [AG_END] = COMBO(af_combo, KC_END),
+    [AF_HOME] = COMBO(ad_combo, KC_HOME),
     [ZV_PASTE] = COMBO(zv_combo, LCTL(KC_V)),
     [ZC_COPY] = COMBO(zc_combo, LCTL(KC_C)),
 };
