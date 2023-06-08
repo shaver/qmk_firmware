@@ -105,3 +105,17 @@ combo_t key_combos[] = {
     [ZC_COPY] = COMBO(zc_combo, LCTL(KC_C)),
 };
 
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    led_t state = host_keyboard_led_state();
+
+    if (state.caps_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(48, 255, 255, 255);
+    }
+    if (state.scroll_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(84, 255, 255, 255);
+    }
+    if (state.num_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(15, 255, 255, 255);
+    }
+    return false;
+}
