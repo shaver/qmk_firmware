@@ -26,6 +26,13 @@ enum layers{
     WIN_NUMPAD
 };
 
+enum my_keycodes {
+    KVM_PC1 = SAFE_RANGE,
+    KVM_PC2,
+    KVM_PC3,
+    KVM_PC4,
+};
+
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 #define LAY_PAD MO(WIN_NUMPAD)
@@ -33,7 +40,7 @@ enum layers{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_ansi_89(
         KC_MUTE,  KC_ESC,   KC_BRID,  KC_BRIU,  KC_NO,    KC_NO,    RGB_VAD,   RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  KC_INS,             KC_DEL,
-        _______,  KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,      KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,            KC_PGUP,
+        LAY_PAD,  KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,      KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,            KC_PGUP,
         _______,  KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,            KC_PGDN,
         _______,  KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,      KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,             KC_END,
         _______,  KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,      KC_B,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSFT,  KC_UP,
@@ -56,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  KC_LCTL,  KC_LWIN,            KC_LALT,  KC_SPC,  MO(WIN_FN),                     KC_SPC,             KC_RALT,                      KC_LEFT,  KC_DOWN,  KC_RGHT),
 
     [WIN_FN] = LAYOUT_ansi_89(
-        KC_MPLY,  _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,   RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,   KC_VOLU,  _______,            KC_PSCR,
+        KC_MPLY,  _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,   RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,   KC_VOLU,  KC_SCRL,            KC_PSCR,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,            RGB_VAI,
         _______,  RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,   _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,            RGB_VAD,
         QK_MAKE,  _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,   _______,  _______,  _______,  _______,  _______,  _______,             _______,            KC_HOME,
@@ -64,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_BOOT,  _______,  _______,            _______,  _______,  _______,                       _______,            _______,                       _______,  _______,  _______),
 
     [WIN_NUMPAD] = LAYOUT_ansi_89(
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,            KC_PAUSE,
+        _______,  _______,  KVM_PC1,  KVM_PC2,  KVM_PC3,  KVM_PC4,  _______,   _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,            KC_PAUSE,
         _______,  _______,  KC_KP_1,  KC_KP_2,  KC_KP_3,  KC_KP_4,  KC_KP_5,   KC_KP_6,  KC_KP_7,  KC_KP_8,  KC_KP_9,  KC_KP_0,  KC_PMNS,   KC_PPLS,  _______,            _______,
         _______,  _______,  KC_KP_7,  KC_KP_8,  KC_KP_9,  _______,  _______,   _______,  _______,  KC_PAST,  _______,  _______,  _______,   _______,  _______,            _______,
         _______,  KC_NUM,   KC_KP_4,  KC_KP_5,  KC_KP_6,  _______,  _______,   _______,  _______,  _______,  _______,  _______,  _______,             KC_PENT,            _______,
@@ -117,5 +124,23 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (state.num_lock) {
         RGB_MATRIX_INDICATOR_SET_COLOR(15, 255, 255, 255);
     }
+    return false;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t * record) {
+    if (keycode < KVM_PC1 || keycode > KVM_PC4 || !record->event.pressed) {
+        return true;
+    }
+
+ #define KVM_SWITCH(KEY_) SS_DOWN(X_SCRL) SS_UP(X_SCRL) SS_DOWN(X_SCRL) SS_UP(X_SCRL) SS_DOWN(KEY_) SS_UP(KEY_)
+    switch (keycode) {
+        case KVM_PC1: SEND_STRING_DELAY(KVM_SWITCH(X_1), 50); break;
+        case KVM_PC2: SEND_STRING_DELAY(KVM_SWITCH(X_2), 50); break;
+        case KVM_PC3: SEND_STRING_DELAY(KVM_SWITCH(X_3), 50); break;
+        case KVM_PC4: SEND_STRING_DELAY(KVM_SWITCH(X_4), 50); break;
+        default:;
+    }
+ #undef KVM_SWITCH
+
     return false;
 }
