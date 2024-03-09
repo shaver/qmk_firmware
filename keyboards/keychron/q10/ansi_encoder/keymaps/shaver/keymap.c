@@ -91,8 +91,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 #endif // ENCODER_MAP_ENABLE
 
 enum combos {
-    AG_END,
-    AF_HOME,
     ZV_PASTE,
     ZC_COPY,
     COMBO_LENGTH
@@ -106,8 +104,6 @@ const uint16_t PROGMEM zc_combo[] = { KC_Z, KC_C, COMBO_END };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [AG_END] = COMBO(af_combo, KC_END),
-    [AF_HOME] = COMBO(ad_combo, KC_HOME),
     [ZV_PASTE] = COMBO(zv_combo, LCTL(KC_V)),
     [ZC_COPY] = COMBO(zc_combo, LCTL(KC_C)),
 };
