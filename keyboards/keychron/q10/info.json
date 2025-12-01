@@ -31,7 +31,14 @@
             "splash": false,
             "solid_splash": false
         },
-	"default": "typing_heatmap",
+	"default":  {
+	    "on": true,
+	    "animation": "typing_heatmap",
+	    "hue": 235,
+	    "sat": 100,
+	    "val": 100,
+	    "speed": 50
+	},
         "driver": "snled27351",
         "sleep": false
     }
