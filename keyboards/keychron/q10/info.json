@@ -31,6 +31,7 @@
             "splash": false,
             "solid_splash": false
         },
+	"default": "typing_heatmap",
         "driver": "snled27351",
         "sleep": false
     }
