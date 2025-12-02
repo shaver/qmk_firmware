@@ -1,3 +1,2 @@
-#define COMBO_TERM 40
 #define PERMISSIVE_HOLD
 
